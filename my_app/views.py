@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Subscriber
-from .models import Blog
+from .models import Blog, Author
 # Create your views here.
 
 def index(request):
