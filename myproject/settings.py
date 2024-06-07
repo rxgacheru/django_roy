@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from decouple import config
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'my_app',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -76,20 +80,20 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'blog_site',
-#        'USER' : 'postgres',
-#        'PASSWORD' : 'pin79090',
-#        'HOST' : 'localhost',
-#      'PORT' : '5432'
-#    }
-#}
-
 DATABASES = {
- "default": dj_database_url.parse(config("DATABASE_URL"))
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'blog_site',
+       'USER' : 'postgres',
+       'PASSWORD' : 'pin79090',
+       'HOST' : 'localhost',
+       'PORT' : '5432'
+   }
 }
+
+# DATABASES = {
+#  "default": dj_database_url.parse(config("DATABASE_URL"))
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -109,6 +113,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+cloudinary.config(
+    cloud_name = 'dtjs5cuyj',
+    api_key = '624559359117247',
+    api_secret = 'PbIFo5MbQR4hSKmjjdSF-F_QVgQ'
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

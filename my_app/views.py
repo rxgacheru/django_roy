@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Subscriber
+from .models import Subscriber, Blog
 from .forms import BlogForm
 
 # Create your views here.
@@ -45,11 +45,15 @@ def subscribe(request):
     return render(request, 'subscribe.html')
 
 def add_blog(request):
-   if request.METHOD == 'POST':
-      form = BlogForm(request.POST)
-      if form.is_valid():
-         blog = form.save()
-         return redirect('blog_list')
-      else:
-         form = BlogForm()
-      return render(request, 'add_blog.html', {'form': form})
+    if request.method == 'POST':
+        form = BlogForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Save the form data to create a new Blog object
+            blog = form.save(commit=False)  # Use commit=False to modify the object before saving
+            blog.save()  # Save the modified Blog object with the author assigned
+            
+            return redirect('bloglist')  # Redirect to the 'blog_list' view after successful form submission
+    else:
+        form = BlogForm()
+    
+    return render(request, 'add_blog.html', {'form': form})
