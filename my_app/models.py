@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from django import forms
+
 
 
 class Author(models.Model):
@@ -26,27 +26,9 @@ class Blog(models.Model):
   def __str__(self):
     return self.title
   
+
 class Subscriber(models.Model):
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
-        return self.email
-    
-
-class BlogForm(forms.ModelForm):
-    # Define the author field as a dropdown menu of authors
-    author = forms.ModelChoiceField(queryset=Author.objects.all(), empty_label="Select an author")
-
-    class Meta:
-        model = Blog
-        fields = ['author', 'title', 'content', 'is_published']
-
-    def __init__(self, *args, **kwargs):
-        super(BlogForm, self).__init__(*args, **kwargs)
-        # Customize the form's appearance or behavior here if needed
-
-    def clean(self):
-        cleaned_data = super().clean()
-        # Additional form validation can be performed here
-        return cleaned_data
+      return self.email
