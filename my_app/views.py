@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Subscriber
+from .forms import BlogForm
+
 # Create your views here.
 
 def index(request):
@@ -41,3 +43,13 @@ def subscribe(request):
             messages.success(request, 'Thank you for subscribing!')
             return redirect('subscribe')
     return render(request, 'subscribe.html')
+
+def add_blog(request):
+   if request.METHOD == 'POST':
+      form = BlogForm(request.POST)
+      if form.is_valid():
+         blog = form.save()
+         return redirect('blog_list')
+      else:
+         form = BlogForm()
+      return render(request, 'add_blog.html', {'form': form})
